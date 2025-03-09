@@ -3,7 +3,7 @@ FROM ruby:3.2
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN bundle install && bundle exec rails generate rspec:install
 
 # Copy application files
 COPY . .
