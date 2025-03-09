@@ -1,19 +1,31 @@
-version: '3'
+version: '3.8' 
 services:
   db:
-    image: postgres:latest
+    image: postgres:15
     environment:
-      POSTGRES_USER: rails-user 
+      POSTGRES_USER: rails-user
       POSTGRES_PASSWORD: pass_word
       POSTGRES_DB: rails_db
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  
+    healthcheck:  
+      test: ["CMD-SHELL", "pg_isready -U rails-user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   web:
     build: .
-    ports:
+    command: rails server -b 0.0.0.0
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy 
     environment:
       DATABASE_URL: postgres://rails-user:pass_word@db:5432/rails_db
+    volumes:
+      - .:/app 
+volumes:
+  postgres_data: 
