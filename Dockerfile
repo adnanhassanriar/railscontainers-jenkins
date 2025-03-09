@@ -2,14 +2,15 @@ FROM ruby:3.2
 
 WORKDIR /app
 
+# Install dependencies
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && bundle exec rails generate rspec:install
-RUN gem install bundler && bundle install
-# Copy application files
+RUN bundle install
+
+# Generate RSpec configuration
+RUN bundle exec rails generate rspec:install
+
+# Copy application code
 COPY . .
 
-# Expose the application port
 EXPOSE 3000
-
-# Run the Rails server
 CMD ["rails", "server", "-b", "0.0.0.0"]
