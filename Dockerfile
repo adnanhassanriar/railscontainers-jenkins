@@ -6,11 +6,11 @@ WORKDIR /app
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-# Generate RSpec configuration
-RUN bundle exec rails generate rspec:install
-
-# Copy application code
+# Copy the full application code
 COPY . .
+
+# Generate RSpec configuration (after copying the app)
+RUN bundle exec rails generate rspec:install
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
