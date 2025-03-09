@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && bundle exec rails generate rspec:install
-
+RUN gem install bundler && bundle install
 # Copy application files
 COPY . .
 
