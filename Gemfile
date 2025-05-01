@@ -64,5 +64,5 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 6.1.0'  # Latest version compatible with Rails 7
+  gem 'rspec-rails', '~> 8.0.0'  # Latest version compatible with Rails 7
 end
